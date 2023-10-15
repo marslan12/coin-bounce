@@ -1,11 +1,20 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const { PORT } = require("./config/index,js");
+const dbConnect = require("./database/index,js");
+const router = require("./routes/index");
+const errorHandler = require("./middlewares/errorHandler");
+
 const app = express();
-const port = 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(cookieParser());
+app.use(express.json());
+app.use(router);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+dbConnect();
+
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
 });
