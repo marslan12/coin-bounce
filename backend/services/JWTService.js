@@ -21,6 +21,7 @@ class JWTService {
   static verifyRefreshToken(token) {
     return jwt.verify(token, REFRESH_TOKEN_SECRET);
   }
+
   static async saveRefreshToken(token, userId) {
     try {
       const newToken = new RefreshToken({
@@ -29,6 +30,14 @@ class JWTService {
       });
 
       await newToken.save();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static async updateRefreshToken(token, userId) {
+    try {
+      await RefreshToken.updateOne({ userId }, { token }, { upsert: true });
     } catch (error) {
       console.log(error);
     }

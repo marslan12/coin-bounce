@@ -113,6 +113,24 @@ const authController = {
         return next(error);
       }
 
+      const accessToken = JWTService.signAccessToken(
+        { _id: user._id, email: user.email },
+        "30m"
+      );
+
+      const refreshToken = JWTService.signAccessToken({ _id: user._id }, "60m");
+      JWTService.saveRefreshToken(refreshToken, user._id);
+
+      res.cookie("accessToken", accessToken, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      });
+
       const userDTO = new UserDTO(user);
       return res.status(200).json({ user: userDTO });
     } catch (error) {
