@@ -42,6 +42,14 @@ class JWTService {
       console.log(error);
     }
   }
+
+  static async deleteRefreshToken(token) {
+    try {
+      await RefreshToken.deleteOne({ token });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = JWTService;
