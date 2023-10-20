@@ -6,12 +6,12 @@ const {
 const RefreshToken = require("../models/token");
 
 class JWTService {
-  static signAccessToken(payload, expiryTime) {
-    return jwt.sign(payload, ACCESS_TOKEN_SECRET, { expiresIn: expiryTime });
+  static signAccessToken(_id) {
+    return jwt.sign({ _id }, ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
   }
 
-  static signRefreshToken(payload, expiryTime) {
-    return jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: expiryTime });
+  static signRefreshToken(_id) {
+    return jwt.sign({ _id }, REFRESH_TOKEN_SECRET, { expiresIn: "60m" });
   }
 
   static verifyAccessToken(token) {
