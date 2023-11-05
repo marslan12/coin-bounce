@@ -14,7 +14,7 @@ const authController = {
   async register(req, res, next) {
     //Input Validations
     const userRegisterSchema = Joi.object({
-      userName: Joi.string().min(5).max(30).required(),
+      username: Joi.string().min(5).max(30).required(),
       name: Joi.string().max(30).required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
@@ -27,10 +27,10 @@ const authController = {
       return next(error);
     }
 
-    const { name, userName, email, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     //Check for duplicate record
-    const isUserNameExist = await User.exists({ userName });
+    const isUserNameExist = await User.exists({ username });
     const isEmailExist = await User.exists({ email });
 
     try {
@@ -65,7 +65,7 @@ const authController = {
       const userToRegister = new User({
         name,
         email,
-        userName,
+        username,
         password: hashedPassword,
       });
 
@@ -90,11 +90,11 @@ const authController = {
 
   //////// Method For Login //////////
   async login(req, res, next) {
-    const { userName, password } = req.body;
+    const { username, password } = req.body;
 
     let user;
     try {
-      user = await User.findOne({ userName });
+      user = await User.findOne({ username });
 
       if (!user) {
         const error = {

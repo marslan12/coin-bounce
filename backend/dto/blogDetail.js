@@ -6,7 +6,7 @@ class BlogDetailDTO {
     this.photoPath = blog.photoPath;
     this.createdAt = blog.createdAt;
     this.authorName = blog.author.name;
-    this.authorUserName = blog.author.userName;
+    this.authorUserName = blog.author.username;
   }
 }
 
